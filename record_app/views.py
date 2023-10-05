@@ -1,9 +1,17 @@
 from django.shortcuts import render, redirect
 from .forms import CreateUserForm
 from django.contrib.auth.models import Group
+from django.contrib.auth import authenticate, login, logout
+from .models import *
 
 def home(request):
-    return render(request, "index.html")
+    if request.user.is_authenticated:
+
+        context = {}
+        return render(request, "index.html", context)
+
+    else:
+        return redirect('login')
 
 def registerUser(request):
     #bring in the CreateUserForm from forms.py
@@ -16,15 +24,19 @@ def registerUser(request):
             
             user = form.save()
 
-            group = Group.objects.get(name='customer')
+            group = Group.objects.get(name='customers')
             user.groups.add(group)
 
-            return redirect('home')
+            return redirect('login')
     
     context = {
         'form' : form
         }
 
     return render(request, 'register.html', context)
+
+def loginUser(request):
+    context={}
+    return render(request, "login.html", context)
 
 # Create your views here.
