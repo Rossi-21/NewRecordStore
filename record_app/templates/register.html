@@ -17,6 +17,10 @@
         {% csrf_token %}
         {{form.errors}}
         <div>
+            <label class="form-label" for="username">Username:</label>
+            {{form.username}}
+        </div>
+        <div>
             <label class="form-label" for="first_name">First Name:</label>
             {{form.first_name}}
         </div>

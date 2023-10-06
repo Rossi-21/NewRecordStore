@@ -23,11 +23,12 @@ def registerUser(request):
         if form.is_valid():
             
             user = form.save()
+            #group = Group.objects.get(name='customer')
+            #user.groups.add(group)
+            login(request, user)
 
-            group = Group.objects.get(name='customers')
-            user.groups.add(group)
 
-            return redirect('login')
+            return redirect('home')
     
     context = {
         'form' : form
